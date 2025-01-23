@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+import csv
+import os
 
 
 def getLatestNews(url: str = "https://indianexpress.com/latest-news/"):
@@ -19,7 +21,7 @@ def getLatestNews(url: str = "https://indianexpress.com/latest-news/"):
 
             image_url = image["src"] if image else "No Image"
             image_alt = image["alt"] if image else "No Alt Text"
-            
+
             data.append(
                 {
                     "title": title.get_text(strip=True) if title else "No Title",
@@ -27,10 +29,27 @@ def getLatestNews(url: str = "https://indianexpress.com/latest-news/"):
                     "time": time.get_text(strip=True) if time else "No Time",
                     "image_url": image_url,
                     "image_alt": image_alt,
-                    "summary": summary.get_text(strip=True) if summary else "No Summary",
+                    "summary": (
+                        summary.get_text(strip=True) if summary else "No Summary"
+                    ),
                 }
             )
-            
+
+        with open(os.path.join("data", "latest_news.csv"), "w", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "title",
+                    "url",
+                    "time",
+                    "image_url",
+                    "image_alt",
+                    "summary",
+                ],
+            )
+            writer.writeheader()
+            writer.writerows(data)
+
         return data
 
     except requests.exceptions.RequestException as e:
@@ -38,7 +57,7 @@ def getLatestNews(url: str = "https://indianexpress.com/latest-news/"):
         return []
 
 
-def getTopNews(url: str="https://indianexpress.com/top-news/"):
+def getTopNews(url: str = "https://indianexpress.com/top-news/"):
     try:
         req = requests.get(url)
         req.raise_for_status()
@@ -55,7 +74,7 @@ def getTopNews(url: str="https://indianexpress.com/top-news/"):
 
             image_url = image["src"] if image else "No Image"
             image_alt = image["alt"] if image else "No Alt Text"
-            
+
             data.append(
                 {
                     "title": title.get_text(strip=True) if title else "No Title",
@@ -63,9 +82,26 @@ def getTopNews(url: str="https://indianexpress.com/top-news/"):
                     "time": time.get_text(strip=True) if time else "No Time",
                     "image_url": image_url,
                     "image_alt": image_alt,
-                    "summary": summary.get_text(strip=True) if summary else "No Summary",
+                    "summary": (
+                        summary.get_text(strip=True) if summary else "No Summary"
+                    ),
                 }
             )
+
+        with open(os.path.join("data", "top_news.csv"), "w", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "title",
+                    "url",
+                    "time",
+                    "image_url",
+                    "image_alt",
+                    "summary",
+                ],
+            )
+            writer.writeheader()
+            writer.writerows(data)
 
         return data
 
@@ -73,5 +109,4 @@ def getTopNews(url: str="https://indianexpress.com/top-news/"):
         print(f"An error occurred while fetching data: {e}")
         return {}
 
-
-getTopNews()
+getLatestNews()
