@@ -1,0 +1,1 @@
+watchmedo auto-restart --pattern="*.py" --recursive -- flask run --host=0.0.0.0
