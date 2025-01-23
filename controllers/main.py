@@ -6,7 +6,7 @@ def getLatest(url: str = "https://indianexpress.com/latest-news/"):
     try:
         req = requests.get(url)
         req.raise_for_status()
-        
+        html = req.text
         soup = BeautifulSoup(html, "html.parser").find_all(class_="articles")
         print(f"Number of articles found: {len(soup)}")
 
@@ -31,7 +31,7 @@ def getLatest(url: str = "https://indianexpress.com/latest-news/"):
                     "summary": summary.get_text(strip=True) if summary else "No Summary",
                 }
             )
-
+            
         return data
 
     except requests.exceptions.RequestException as e:
