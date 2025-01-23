@@ -54,7 +54,7 @@ def getLatestNews(url: str = "https://indianexpress.com/latest-news/"):
 
     except requests.exceptions.RequestException as e:
         print(f"An error occurred while fetching data: {e}")
-        return []
+        raise e
 
 
 def getTopNews(url: str = "https://indianexpress.com/top-news/"):
@@ -107,6 +107,17 @@ def getTopNews(url: str = "https://indianexpress.com/top-news/"):
 
     except requests.exceptions.RequestException as e:
         print(f"An error occurred while fetching data: {e}")
-        return {}
+        raise e
 
-getLatestNews()
+
+if __name__ == "__main__":
+
+    n = input("Enter 1 for Latest News and 2 for Top News: ")
+    if n == "1":
+        getLatestNews()
+        print("Latest News Fetched and saved in data/latest_news.csv")
+    elif n == "2":
+        getTopNews()
+        print("Top News Fetched and saved in data/top_news.csv")
+    else:
+        print("Invalid Input")
