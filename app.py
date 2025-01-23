@@ -1,6 +1,6 @@
 from flask import Flask
 import requests
-
+from jinja2 import Environment, FileSystemLoader
 from controllers.main import getTopNews, getLatestNews
 
 app = Flask(__name__)
@@ -9,7 +9,9 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     try:
-        return {"message": "Welcome to the News Scrapping API"}
+        env = Environment(loader = FileSystemLoader('templates'))
+        template = env.get_template('index.html')
+        return template.render()
 
     except requests.exceptions.RequestException as e:
         return {"message": "Failed to connect to the server"}
@@ -19,12 +21,9 @@ def home():
 def latest():
     try:
         res = getLatestNews()
-        return {
-            "message": "Latest News Fetched and saved in data/latest_news.csv",
-            "no_of_news": len(res),
-            "date": res[0]["time"].split(" ")[1]+" "+res[0]["time"].split(" ")[2]+" "+res[0]["time"].split(" ")[3],
-            "data": res,
-        }
+        env = Environment(loader = FileSystemLoader('templates'))
+        template = env.get_template('latest.html')
+        return template.render(news = res)
 
     except requests.exceptions.RequestException as e:
         return {"message": "Failed to connect to the server"}
@@ -34,12 +33,9 @@ def latest():
 def top():
     try:
         res = getTopNews()
-        return {
-            "message": "Top News Fetched and saved in data/top_news.csv",
-            "no_of_news": len(res),
-            "date": res[0]["time"].split(" ")[1]+" "+res[0]["time"].split(" ")[2]+" "+res[0]["time"].split(" ")[3],
-            "data": res,
-        }
+        env = Environment(loader = FileSystemLoader('templates'))
+        template = env.get_template('top.html')
+        return template.render(news = res)
 
     except requests.exceptions.RequestException as e:
         return {"message": "Failed to connect to the server"}

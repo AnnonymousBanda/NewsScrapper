@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>News Scraping API</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+
+  <body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; margin: 0; padding: 0;">
+    <a href="/" style="display: flex; padding: 10px; justify-content: center; align-items: center; text-decoration: none; background:#262626; border-radius: 10px; font-size: 20px; color: whitesmoke; position: absolute; top: 10px; right: 20px;"><svg style="fill: whitesmoke;" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24">
+        <path d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 11 21 L 11 15 L 13 15 L 13 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z M 12 4.7910156 L 18 10.191406 L 18 11 L 18 19 L 15 19 L 15 13 L 9 13 L 9 19 L 6 19 L 6 10.191406 L 12 4.7910156 z"></path>
+        </svg></a>    
+        <h1 style="font-size: 40px;">Top News Headlines</h1>
+    <div style="display: flex; flex-direction: column; gap: 20px; width: 60vw;">
+      {% for news_item in news %}
+        <div style="display: flex; align-items: center; gap: 30px; padding: 20px; border-radius: 10px; width: 100%;">
+            <img src="{{news_item.image_url}}" alt="{{news_item.image_alt}}" style="width: 270px; height: 150px;">
+          <div style="display: flex; flex-direction: column;">
+              <h2>{{ news_item.title }}</h2>
+              <p>{{ news_item.summary }}</p>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                  <p>{{news_item.time}}</p>
+                  <a href="{{ news_item.link }}" style="text-decoration: none; color: #87cefa;">Read more</a>
+              </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
