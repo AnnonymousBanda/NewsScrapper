@@ -59,6 +59,17 @@ def getLatestNews(url: str = "https://indianexpress.com/latest-news/"):
             )
             writer.writeheader()
             writer.writerows(data)
+        
+        # Writing the extracted data to a text file named latest_news.txt in the data directory
+        with open(os.path.join("data", "latest_news.txt"), "w") as f:
+            for item in data:
+                f.write(f"Title: {item['title']}\n")
+                f.write(f"URL: {item['url']}\n")
+                f.write(f"Time: {item['time']}\n")
+                f.write(f"Image URL: {item['image_url']}\n")
+                f.write(f"Image Alt: {item['image_alt']}\n")
+                f.write(f"Summary: {item['summary']}\n")
+                f.write("-" * 80 + "\n")
 
         return data
 
@@ -118,6 +129,17 @@ def getTopNews(url: str = "https://indianexpress.com/top-news/"):
             )
             writer.writeheader()
             writer.writerows(data)
+        
+        # Writing the extracted data to a text file named top_news.txt in the data directory
+        with open(os.path.join("data", "top_news.txt"), "w") as f:
+            for item in data:
+                f.write(f"Title: {item['title']}\n")
+                f.write(f"URL: {item['url']}\n")
+                f.write(f"Time: {item['time']}\n")
+                f.write(f"Image URL: {item['image_url']}\n")
+                f.write(f"Image Alt: {item['image_alt']}\n")
+                f.write(f"Summary: {item['summary']}\n")
+                f.write("-" * 80 + "\n")
 
         return data
 
