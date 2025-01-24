@@ -1,3 +1,7 @@
+# Description: This file contains the main code for the Flask app. It defines the routes and the functions to render the home, latest-news, and top-news pages. It also imports the getTopNews and getLatestNews functions from controllers/main.py to fetch the news data.
+# The home route renders the home page using a Jinja2 template. The latest-news and top-news routes fetch the news data using the getLatestNews and getTopNews functions, respectively, and render the corresponding pages using Jinja2 templates. In case of an exception, an error message is returned.
+
+# Importing required libraries
 from flask import Flask
 import requests
 from jinja2 import Environment, FileSystemLoader
